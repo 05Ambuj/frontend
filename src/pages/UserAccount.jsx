@@ -6,7 +6,6 @@ import PostCard from "../components/PostCard";
 import axios from "axios";
 import { Loading } from "../components/Loading";
 import Modal from "../components/Modal";
-s
 import {
   MdOutlineKeyboardArrowDown,
   MdOutlineKeyboardArrowUp,
