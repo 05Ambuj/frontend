@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const PostContext = createContext();
-
+const BEAPI=import.meta.env.BACKEEND_URL;
 export const PostContextProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
   const [reels, setReels] = useState([]);
@@ -12,7 +12,7 @@ export const PostContextProvider = ({ children }) => {
 
   async function fetchPosts() {
     try {
-      const { data } = await axios.get("/api/post/all");
+      const { data } = await axios.get(`${BEAPI}/api/post/all`);
 
       setPosts(data.posts);
       setReels(data.reels);
@@ -26,7 +26,7 @@ export const PostContextProvider = ({ children }) => {
   async function addPost(formData, setFile, setCaption, setFilePrev, type) {
     setAddLoading(true);
     try {
-      const { data } = await axios.post("/api/post/new?type=" + type, formData);
+      const { data } = await axios.post(`${BEAPI}/api/post/new?type=` + type, formData);
       toast.success(data.message);
       fetchPosts();
       setFile("");
@@ -41,7 +41,7 @@ export const PostContextProvider = ({ children }) => {
 
   async function likePost(id) {
     try {
-      const { data } = await axios.post("/api/post/like/" + id);
+      const { data } = await axios.post(`${BEAPI}/api/post/like/` + id);
       toast.success(data.message);
       fetchPosts();
     } catch (error) {
@@ -51,7 +51,7 @@ export const PostContextProvider = ({ children }) => {
 
   async function addComment(id, comment, setComment, setShow) {
     try {
-      const { data } = await axios.post("/api/post/comment/" + id, {
+      const { data } = await axios.post(`${BEAPI}/api/post/comment/` + id, {
         comment,
       });
       toast.success(data.message);
@@ -66,7 +66,7 @@ export const PostContextProvider = ({ children }) => {
   async function deletePost(id) {
     setLoading(true);
     try {
-      const { data } = await axios.delete("/api/post/" + id);
+      const { data } = await axios.delete(`${BEAPI}/api/post/` + id);
       toast.success(data.message);
       fetchPosts();
       setLoading(false);
@@ -78,7 +78,7 @@ export const PostContextProvider = ({ children }) => {
 
   async function deleteComment(id,commentId) {
     try {
-      const {data}=await axios.delete(`/api/post/comment/${id}?commentId=${commentId}`)
+      const {data}=await axios.delete(`${BEAPI}/api/post/comment/${id}?commentId=${commentId}`)
       toast.success(data.message)
       fetchPosts()
     } catch (error) {

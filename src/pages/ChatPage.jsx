@@ -5,7 +5,7 @@ import { FaSearch } from "react-icons/fa";
 import Chat from "../components/chat/Chat";
 import MessageContainer from "../components/chat/MessageContainer";
 import { SocketData } from "../context/SocketContext";
-
+const BEAPI=import.meta.env.BACKEEND_URL;
 const ChatPage = ({ user }) => {
   const { createChat, selectedChat, setSelectedChat, chats, setChats } =ChatData();
 
@@ -15,7 +15,7 @@ const ChatPage = ({ user }) => {
 
   async function fetchAllUsers() {
     try {
-      const { data } = await axios.get("/api/user/all?search=" + query);
+      const { data } = await axios.get(`${BEAPI}/api/user/all?search=` + query);
 
       setUsers(data);
     } catch (error) {
@@ -25,7 +25,7 @@ const ChatPage = ({ user }) => {
 
   const getAllChats = async () => {
     try {
-      const { data } = await axios.get("/api/messages/chats");
+      const { data } = await axios.get(`${BEAPI}/api/messages/chats`);
       setChats(data);
     } catch (error) {
       console.log(error);

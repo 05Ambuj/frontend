@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 const UserContext = createContext();
-
+const BEAPI=import.meta.env.BACKEEND_URL;
 export const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState([]);
   const [isAuth, setIsAuth] = useState(false);
@@ -12,7 +12,7 @@ export const UserContextProvider = ({ children }) => {
   async function registerUser(formData, navigate,fetchPosts) {
     setLoading(true);
     try {
-      const { data } = await axios.post("/api/auth/register", formData);
+      const { data } = await axios.post(`${BEAPI}/api/auth/register`, formData);
       toast.success(data.message);
       setIsAuth(true);
       setUser(data.user);
@@ -28,7 +28,7 @@ export const UserContextProvider = ({ children }) => {
   async function loginUser(email, password, navigate,fetchPosts) {
     setLoading(true);
     try {
-      const { data } = await axios.post("/api/auth/login", {
+      const { data } = await axios.post(`${BEAPI}/api/auth/login`, {
         email,
         password,
         navigate,
@@ -47,7 +47,7 @@ export const UserContextProvider = ({ children }) => {
 
   async function logoutUser(navigate) {
     try {
-      const { data } = await axios.get("/api/auth/logout");
+      const { data } = await axios.get(`${BEAPI}/api/auth/logout`);
 
       if (data.message) {
         toast.success(data.message);
@@ -62,7 +62,7 @@ export const UserContextProvider = ({ children }) => {
 
   async function fetchUser() {
     try {
-      const { data } = await axios.get("/api/user/me");
+      const { data } = await axios.get(`${BEAPI}/api/user/me`);
       setUser(data);
       setIsAuth(true);
       setLoading(false);
@@ -78,7 +78,7 @@ export const UserContextProvider = ({ children }) => {
 
   async function followUser(id,fetchUser) {
     try {
-      const { data } = await axios.post(`/api/user/follow/${id}`);
+      const { data } = await axios.post(`${BEAPI}/api/user/follow/${id}`);
       toast.success(data.message);
       fetchUser();
     } catch (error) {
@@ -88,7 +88,7 @@ export const UserContextProvider = ({ children }) => {
 
   async function updateProfile(id,formData,setFile) {
     try {
-      const { data } = await axios.put(`/api/user/${id}`,formData);
+      const { data } = await axios.put(`${BEAPI}/api/user/${id}`,formData);
       toast.success(data.message);
       setFile(null)
       fetchUser();
@@ -98,7 +98,7 @@ export const UserContextProvider = ({ children }) => {
   }
   async function updateProfileName(id,name,setShowInput) {
     try {
-      const { data } = await axios.put(`/api/user/${id}`,{name});
+      const { data } = await axios.put(`${BEAPI}/api/user/${id}`,{name});
       toast.success(data.message);
       fetchUser();
       setShowInput(false)

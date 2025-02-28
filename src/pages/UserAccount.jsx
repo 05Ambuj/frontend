@@ -6,7 +6,7 @@ import PostCard from "../components/PostCard";
 import axios from "axios";
 import { Loading } from "../components/Loading";
 import Modal from "../components/Modal";
-
+s
 import {
   MdOutlineKeyboardArrowDown,
   MdOutlineKeyboardArrowUp,
@@ -31,7 +31,7 @@ const UserAccount = ({ user: loggedInUser }) => {
 
   async function fetchUser() {
     try {
-      const { data } = await axios.get("/api/user/" + params.id);
+      const { data } = await axios.get(`${BEAPI}/api/user/` + params.id);
       setUser(data);
       setLoading(false);
     } catch (error) {
@@ -72,7 +72,7 @@ const UserAccount = ({ user: loggedInUser }) => {
 
   async function followData() {
     try {
-      const {data}=await axios.get("/api/user/followdata/"+user._id)
+      const {data}=await axios.get(`${BEAPI}/api/user/followdata/`+user._id)
       setFollowersData(data.followers)
       setFollowingsData(data.followings)
     } catch (error) {

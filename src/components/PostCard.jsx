@@ -11,6 +11,7 @@ import { Loading, LoadingAnimation } from "./Loading";
 import toast from "react-hot-toast";
 import axios from "axios";
 
+const BEAPI=import.meta.env.BACKEEND_URL;
 const PostCard = ({ type, value }) => {
   const [isLike, setIsLike] = useState(false);
   const [show, setShow] = useState(false);
@@ -57,7 +58,7 @@ const PostCard = ({ type, value }) => {
   async function updateCaption() {
     setCaptionLoading(true);
     try {
-      const { data } = await axios.put("/api/post/" + value._id, { caption });
+      const { data } = await axios.put(`${BEAPI}/api/post/` + value._id, { caption });
       toast.success(data.message);
       fetchPosts();
       setShowInput(false);
@@ -229,7 +230,7 @@ export const Comment = ({ value, user ,owner, id}) => {
   }
   return (
     <div className="flex items-center space-x-2 mt-2">
-      <Link to={`/user/${value.user._id}`}>
+      <Link to={`${BEAPI}/user/${value.user._id}`}>
         <img
           src={value.user.profilePic.url}
           alt="comment user image"
@@ -237,7 +238,7 @@ export const Comment = ({ value, user ,owner, id}) => {
         />
       </Link>
       <div>
-        <Link to={`/user/${value.user._id}`}>
+        <Link to={`${BEAPI}/user/${value.user._id}`}>
           <p className="text-gray-800 font-semibold">{value.user.name}</p>
         </Link>
         <p className="text-gray-500 font-sm">{value.comment}</p>

@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { LoadingAnimation } from "../components/Loading";
-
+const BEAPI=import.meta.env.BACKEEND_URL;
 const Search = () => {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
@@ -10,7 +10,7 @@ const Search = () => {
   async function fetchUsers() {
     setLoading(true);
     try {
-      const { data } = await axios.get("/api/user/all?search=" + search);
+      const { data } = await axios.get(`${BEAPI}/api/user/all?search=` + search);
 
       setUsers(data);
       setLoading(false);

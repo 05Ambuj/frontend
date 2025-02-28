@@ -6,6 +6,7 @@ import Message from "./Message";
 import MessageInput from "./MessageInput";
 import { SocketData } from "../../context/SocketContext";
 
+const BEAPI=import.meta.env.BACKEEND_URL;
 const MessageContainer = ({ selectedChat, setChats }) => {
   const [messages, setMessages] = useState([]);
   const { user } = UserData();
@@ -42,7 +43,7 @@ const MessageContainer = ({ selectedChat, setChats }) => {
     setLoading(true);
     try {
       const { data } = await axios.get(
-        "/api/messages/" + selectedChat.users[0]._id
+        `${BEAPI}/api/messages/` + selectedChat.users[0]._id
       );
 
       setMessages(data);

@@ -3,6 +3,7 @@ import { ChatData } from "../../context/ChatContext";
 import toast from "react-hot-toast";
 import axios from "axios";
 
+const BEAPI=import.meta.env.BACKEEND_URL;
 const MessageInput = ({ setMessages, selectedChat }) => {
   const [textMsg, setTextMsg] = useState("");
   const { setChats } = ChatData();
@@ -10,7 +11,7 @@ const MessageInput = ({ setMessages, selectedChat }) => {
   const handleMessage = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("/api/messages", {
+      const { data } = await axios.post(`${BEAPI}/api/messages`, {
         message: textMsg,
         recieverId: selectedChat.users[0]._id,
       });

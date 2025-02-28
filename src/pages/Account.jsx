@@ -13,6 +13,7 @@ import {
 import { CiEdit } from "react-icons/ci";
 import toast from "react-hot-toast";
 
+const BEAPI=import.meta.env.BACKEEND_URL;
 const Account = ({ user }) => {
   const [type, setType] = useState("posts");
   const [index, setIndex] = useState(0);
@@ -52,7 +53,7 @@ const Account = ({ user }) => {
 
   async function followData() {
     try {
-      const { data } = await axios.get("/api/user/followdata/" + user._id);
+      const { data } = await axios.get(`${BEAPI}/api/user/followdata/` + user._id);
       setFollowersData(data.followers);
       setFollowingsData(data.followings);
     } catch (error) {
@@ -81,7 +82,7 @@ const Account = ({ user }) => {
   async function updatePassword(e) {
     e.preventDefault();
     try {
-      const { data } = await axios.post("/api/user/" + user._id, {
+      const { data } = await axios.post(`${BEAPI}/api/user/` + user._id, {
         oldPassword,
         newPassword,
       });
